@@ -1,0 +1,24 @@
+(define $read-file
+  (lambda [$file]
+    (do { [$port (open-input-file file)]
+          (read-content port)}
+      (close-input-port port))))
+
+(define $read-content
+  (lambda [$file]
+    (do { [$x (eof-port? file)]
+          (if x (print "End") (get-line file))})))
+
+;; (match x something
+;;   {[#f (get-line file)]})
+
+(define $get-line
+  (lambda [$file]
+    (do { [$line (read-line-from-port file)]
+          (write line)}
+      (read-content file))))
+
+(define $main
+  (lambda [$args]
+    (do {[(read-json (nth 1 args))]}
+      )))

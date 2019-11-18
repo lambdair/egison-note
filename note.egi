@@ -1,0 +1,32 @@
+(define $pair
+  (matcher
+    {[[$ $] [integer integer]
+      {[[$x $y] {[x y]}]}]}))
+
+(define $reverse-pair
+  (lambda [$x]
+    (match-all x pair
+      [[$a $b] [b a]])))
+
+(define $head
+  (lambda [$xs]
+    (match xs (list integer)
+      {[<nil> #f] [<cons $y $ys> y]})))
+
+
+(define $repl
+  (lambda []
+    (do {(write "input: ")
+         (flush)
+         [$input (read-line)]
+         (write input)
+         (print "")}
+      (repl))))
+
+(define $main
+  (lambda [$args]
+    (do {[(repl)]}
+      [])))
+
+
+;; (filter (eq? $ 'c') (unpack "abcd"))
