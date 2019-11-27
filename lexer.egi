@@ -18,7 +18,9 @@
           (write-char c)}
       (read-content file))))
 
+(define $identifier formula)
+
 (define $main
   (lambda [$args]
-    (do {[(read-file (nth 1 args))]}
+    (do {[(read-file (car args))]}
       )))

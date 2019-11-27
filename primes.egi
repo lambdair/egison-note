@@ -1,0 +1,42 @@
+take 6 (matchAll primes as list integer with
+      | _ ++ $p :: _ :: #(p+6) :: _
+       -> (p, p+6))
+
+
+take 5 (matchAll primes as list integer with
+--        | _ ++ $p :: (#(p+2) | #(p+4)) & $m :: #(p+6) :: _
+      | _ ++ $p :: $m :: #(p+6) :: _
+      -> (p, m, p+6))
+
+
+concat xss :=
+  matchAllDFS xss as list (list something) with
+  | _ ++ (_ ++ $x :: _) :: _
+  -> x
+
+concat [[1, 2], [3], [], [4, 5]]
+
+
+intersect xs ys :=
+  matchAll (xs, ys) as (multiset eq, multiset eq) with
+  | ($x :: _, #x :: _)
+  -> x
+
+intersect [1, 2, 3] [2, 3, 4]
+
+
+difference xs ys :=
+  matchAll (xs, ys) as (multiset eq, multiset eq) with
+  | ($x :: _, !(#x :: _))
+  -> x
+
+difference [1, 2, 3] [2, 3, 4]
+
+
+unique xs :=
+  matchAllDFS xs as list eq with
+  | {@ ++ $x :: _,
+     !(_ ++ #x :: _)}
+  -> x
+
+unique [1, 2, 3, 2, 4]

@@ -1,0 +1,37 @@
+tails xs :=
+  matchAll xs as list something with
+  | _ ++ $ts
+  -> ts
+
+tails' xs :=
+  matchAll xs as list something with
+  | loop $i (1, _) (_ :: ...) $ts
+  -> ts
+
+tails [1, 2, 3, 4]
+tails' [1, 2, 3, 4]
+
+
+equalMultiset xs ys :=
+  match (xs, ys) as (list eq, multiset eq) with
+  | ([], []) -> True
+  | ($x :: $xs', #x :: $ys') -> equalMultiset xs' ys'
+  | _ -> False
+
+equalMultiset' xs ys :=
+  match (xs, ys) as (list eq, multiset eq) with
+  | loop $i (1, _) {($x_i :: @, #x_i :: @) , ...} ([], []) -> True
+  | _ -> False
+
+equalMultiset [1, 2, 3] [2, 3, 1]
+equalMultiset' [1, 2, 3] [2, 3, 1]
+
+
+card := matcher
+  | card $ $ as (suit, mod 13) with
+    | Card $s $n -> [(s, n)]
+    | Joker -> matchAll ([Spade, Heart, Club, Diamond], [1..13])
+                      as (set suit, set integer) with
+               | ($s :: _, $n :: _) -> (s, n)
+  | $ as something with
+    | $tgt -> [tgt]

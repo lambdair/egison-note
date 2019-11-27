@@ -1,0 +1,6 @@
+twinPrimes :=
+  matchAll primes as list integer with
+  | _ ++ $p :: #(p + 2) :: _ -> (p, p + 2)
+
+take 6 twinPrimes
+take 5 primes
